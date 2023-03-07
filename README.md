@@ -133,7 +133,7 @@ To compile and run you project, enter the command `make run` in Windows PowerShe
 
 To test your program, run the command `make grade`. This will compile your program and test it over predefined testcases and output your score. The same test cases will be used to grade your project, so make sure you get an acceptable score before submission.
 
-## submission
+## Submission
 
 After finishing the lab, run the following commands:
 
