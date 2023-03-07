@@ -10,6 +10,8 @@ grade:
 	bin/grade
 run: build 
 	bin/mem
+archive:
+	git archive --format=zip -o ejust-csc121-lab3.zip lab3
 
 .PHONY: clean
 clean: rm *.o *.exe

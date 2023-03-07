@@ -65,8 +65,8 @@ First, make sure you have `Windows PowerShell` installed. We will use [scoop](ht
 To install `scoop`, run the following commands on powershell:
 
 ```powershell
-> Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-> irm get.scoop.sh | iex
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
 ```
 
 You might have some of them installed. To make sure, run each command on powershell and see if the output indicates that you have it. For example, this is the output if you run `git` when it's not installed:
@@ -132,3 +132,15 @@ git checkout lab3
 To compile and run you project, enter the command `make run` in Windows PowerShell.
 
 To test your program, run the command `make grade`. This will compile your program and test it over predefined testcases and output your score. The same test cases will be used to grade your project, so make sure you get an acceptable score before submission.
+
+## submission
+
+After finishing the lab, run the following commands:
+
+```
+git add .
+git commit -m "Lab 3 done"
+make archive
+```
+
+This will create a file named `ejust-csc121-lab3.zip` in the project directory. This is the file that you will submit.
