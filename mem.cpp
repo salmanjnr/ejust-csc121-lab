@@ -3,22 +3,22 @@
 
 
 // Return the allocated segment. If no place found, return nullptr
-Segment* allocate(Segment** root, unsigned int pid, unsigned int size) {
+Segment* allocate(Segment** head, unsigned int pid, unsigned int size) {
 	return nullptr;
 }
 
 // Free all segments allocated to process
-void deallocate(Segment* root, unsigned int pid) {
+void deallocate(Segment* head, unsigned int pid) {
 }
 
 // For debugging/testing
 // You can use this to print a list as follow: dump(std::cout, list_head)
 //
 // DO NOT EDIT
-void dump(std::ostream& o, Segment* root) {
-	while (root != nullptr) {
-		o << "(" << (( root->pid == -1 )? "H":"P") << ", " << root->start << ", " << root->size << ") " << "--> ";
-		root = root->next;
+void dump(std::ostream& o, Segment* head) {
+	while (head != nullptr) {
+		o << "(" << (( head->pid == -1 )? "H":"P") << ", " << head->start << ", " << head->size << ") " << "--> ";
+		head = head->next;
 	}
 	o << "NULL";
 }

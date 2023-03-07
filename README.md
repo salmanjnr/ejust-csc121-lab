@@ -23,7 +23,7 @@ Assume the size of the memory is 50 B. At first, the memory is empty, so the lis
 [Hole, start = 0, size = 48]
 ```
 
-If we call the function `allocate(*list, 1, 8)` (allocate 10 bytes to process 1), the memory should be modified to be:
+If we call the function `allocate(*list, 1, 8)` (allocate 8 bytes to process 1), the memory should be modified to be:
 ```
 [Process 1, start = 0, size = 8] -> [Hole, start = 8, size = 40]
 ```
@@ -49,6 +49,10 @@ Notice that we deleted the segments allocated to process 4, and merged them with
 ```
 
 Notice that the new hole was merged with both the left and the right holes.
+
+## Tips
+
+* You can call `dump(std::cout, head)` to print the list starting at `head`
 
 ## Setting Up Your Development Environment
 
@@ -108,19 +112,23 @@ For other distros, the process is roughly the same.
 First, you need to clone (create a local copy) the project:
 
 ```
-git clone https://www.github.com/salmanjnr/csc121-sheet3-q4
+git clone https://github.com/salmanjnr/ejust-csc121-lab.git
 ```
 
-This will create a folder with the name `csc121-sheet3-q4` in your current directory. Go into the directory with the following command:
+This will create a folder with the name `ejust-csc121-lab` in your current directory. Go into the directory with the following command:
 
 ```
-cd csc121-sheet3-q4
+cd ejust-csc121-lab
+```
+
+Then run the following command:
+
+```
+git checkout lab3
 ```
 
 ## Compile and Run
 
-To compile your project, run `make` inside the project directory. This will create a folder `bin` (if it doesn't exist already) inside the directory and put the compiled binary with the name `mem` (or `mem.exe` on Windows) inside it.
-
-To run the program, just enter the command `bin/mem`. You can also use `make run` which will compile and run the program directly.
+To compile and run you project, enter the command `make run` in Windows PowerShell.
 
 To test your program, run the command `make grade`. This will compile your program and test it over predefined testcases and output your score. The same test cases will be used to grade your project, so make sure you get an acceptable score before submission.

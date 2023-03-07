@@ -10,8 +10,8 @@ struct Segment {
 	Segment* next;
 };
 
-Segment* allocate(Segment** root, unsigned int pid, unsigned int size);
+Segment* allocate(Segment** head, unsigned int pid, unsigned int size);
 
-void deallocate(Segment* root, unsigned int pid);
+void deallocate(Segment* head, unsigned int pid);
 
-void dump(std::ostream& o, Segment* root);
+void dump(std::ostream& o, Segment* head);
