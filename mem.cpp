@@ -1,60 +1,58 @@
 #include <iostream>
 #include "mem.hpp"
 
-Segment* allocate(Segment** head, unsigned int pid, unsigned int size) {
-    Segment* current = *head;
-    while (current != nullptr) {
-        if (current->pid == -1 && current->size >= size) {
-            break;
+Segment* allocate(Segment** segHead, unsigned int pid, unsigned int size) {
+    int remainingSize, start, totalMem = 50;
+    
+    Segment* current = *segHead;
+while (current -> next != nullptr)
+current = current->next;
+ if (current->prev == nullptr) {
+    current->start = 0;
+    if((int) size > totalMem)
+    return nullptr;
+ }
+else {
+    if (size > current->size)
+         return nullptr;
+}
+current->pid = pid;
+current->size= size;
+
+Segment* newSeg = new Segment;
+current -> next = newSeg;
+newSeg->next=nullptr;
+newSeg->prev=current;
+
+start = current->start + size;
+remainingSize = totalMem - start;
+
+newSeg->pid = -1;
+newSeg -> start = start;
+newSeg->size=remainingSize;
+return *segHead;
+}
+
+void deallocate(Segment* segHead, unsigned int pid) {
+    Segment* current = segHead;
+    while(segHead->next != nullptr) {
+        if (segHead->pid == (int) pid )
+         segHead->pid = -1;
+        segHead = segHead ->next;
+    }
+    while (current->next != nullptr){
+        while (current->pid == current->next->pid){
+            current->size+= current->next->size;
+            current->next = current->next->next;
         }
         current = current->next;
     }
-    if (current == nullptr) {
-        return nullptr;
-    }
-    if (current->size == size) {
-        current->pid = pid;
-        return current;
-    }
-    Segment* newSegment = new Segment;
-    newSegment->pid = pid;
-    newSegment->start = current->start;
-    newSegment->size = size;
-    newSegment->prev = current->prev;
-    newSegment->next = current;
-    current->start += size;
-    current->size -= size;
-    if (current->prev != nullptr) {
-        current->prev->next = newSegment;
-    }
-    current->prev = newSegment;
-    if (*head == current) {
-        *head = newSegment;
-    }
-    return newSegment;
 }
 
- void deallocate(Segment* head, unsigned int pid) {
-    Segment* de_alloc = head;
-    while(head->next != nullptr) {
-        if (head->pid == (int) pid )
-         head->pid = -1;
-        head = head ->next;
-    }
-    while (de_alloc->next != nullptr){
-        while (de_alloc->pid == de_alloc->next->pid){
-            de_alloc-> size+= de_alloc->next->size;
-            de_alloc-> next = de_alloc->next->next;
-        }
-        de_alloc = de_alloc->next;
-    }
-    
- }
-
-void dump(std::ostream& o, Segment* head) {
-    while (head != nullptr) {
-        o << "(" << ((head->pid == -1) ? "H" : std::to_string(head->pid)) << ", " << head->start << ", " << head->size << ") " << "--> ";
-        head = head->next;
+void dump(std::ostream& o, Segment* segHead) {
+    while (segHead != nullptr) {
+        o << "(" << ((segHead->pid == -1) ? "H" : std::to_string(segHead->pid)) << ", " << segHead->start << ", " << segHead->size << ") " << "--> ";
+        segHead = segHead->next;
     }
     o << "NULL";
 }
