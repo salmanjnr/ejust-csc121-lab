@@ -90,4 +90,7 @@ int main() {
 	std::cout << "Deallocate score = " << 100*deallocate_score << "%\n";
 
 	std::cout << "Total (out of 100) = " << (allocate_score+deallocate_score)*50 << "%\n";
+	std::cout<<std::endl;
+	std::cout<<std::endl;
+	std::cout<<std::endl;
 }
