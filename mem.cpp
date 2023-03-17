@@ -1,68 +1,81 @@
+#include <ostream>
 #include <iostream>
 #include "mem.hpp"
+using namespace std;
 
+
+// Return the allocated segment. If no place found, return nullptr
 Segment* allocate(Segment** head, unsigned int pid, unsigned int size) {
-    int remainingSize, start, totalMem = 50;
+    int remain_size, start, whole_mem = 50;
 
-    Segment* currentHead = *head;
-    while (currentHead->next != nullptr)
-        currentHead = currentHead->next;
+    Segment* First_head = *head;
+    while (First_head ->next != nullptr)
+        First_head = First_head ->next;
 
-    if (currentHead->prev == nullptr) {
-        currentHead->start = 0;
-        if((int) size > totalMem)
+    if (First_head ->prev == nullptr) {
+        First_head ->start = 0;
+        if ((int)size > whole_mem)
             return nullptr;
     }
     else {
-        if (size > currentHead -> size)
+        if (size > First_head ->size)
             return nullptr;
     }
+    First_head ->pid = pid;
+    First_head ->size = size;
 
-    currentHead->pid = pid;
-    currentHead->size = size;
+    Segment* newtemp = new Segment;
+    First_head ->next = newtemp;
+    newtemp->next = nullptr;
+    newtemp->prev = First_head;
 
-    Segment* newSegment = new Segment;
-    currentHead->next = newSegment;
-    newSegment->next = nullptr;
-    newSegment->prev = currentHead;
+    start = First_head ->start + size;
+    remain_size = whole_mem - start;
 
-    start = currentHead->start + size;
-    remainingSize = totalMem - start;
+    newtemp->pid = -1;
+    newtemp->start = start;
+    newtemp->size = remain_size;
 
-    newSegment->pid = -1;
-    newSegment -> start = start;
-    newSegment->size = remainingSize;
-
-    return *head;
+    return newtemp;
 }
 
+// Free all segments allocated to process
 void deallocate(Segment* head, unsigned int pid) {
-    Segment* current = head;
-    while(current->next != nullptr) {
-        if (current->pid == (int) pid) 
-            current->pid = -1;
-        current = current->next;
-    }
+    Segment* Deallo = head;
+    while (Deallo->next != nullptr) {
+        if (Deallo ->pid == (int)pid)
+            Deallo ->pid = -1;
+        Deallo = Deallo ->next;
 
-    while (head->next != nullptr){
-        while (head->pid == head->next->pid){
-            head->size += head->next->size;
-            head->next = head->next->next;
+    }
+    Deallo = head;
+    while (Deallo ->next != nullptr) {
+        while (Deallo ->pid == Deallo ->next->pid) {
+            Deallo ->size += Deallo ->next->size;
+            Deallo ->next = Deallo ->next->next;
         }
-        head = head->next;
-    }   
+        Deallo = Deallo ->next;
+
+    }
 }
 
+// For debugging/testing
+// You can use this to print a list as follow: dump(std::cout, list_head)
+//
+// DO NOT EDIT
 void dump(std::ostream& o, Segment* head) {
     while (head != nullptr) {
-        o << "(" << ((head->pid == -1) ? "H" : std::to_string(head->pid)) << ", " << head->start << ", " << head->size << ") " << "--> ";
+        o << "(" << ((head->pid == -1) ? "H" : "P") << ", " << head->start << ", " << head->size << ") " << "--> ";
         head = head->next;
     }
     o << "NULL";
 }
 
-#ifndef GRADING IHJO
+#ifndef GRADING // Don't delete
+
 int main() {
+
     return 0;
 }
-#endif
+
+#endif // Don't delete
